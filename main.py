@@ -7,75 +7,20 @@ def main():
 	user = login.login_user()
 	if user is None:
 		main()
-	elif user.role == "admin":	
+	else :	
 		return display_menu(user)
-	else:
-		return display_menu(user)
-	
-def handle_menu_selection_admin():
-	while True:
-		display_menu_admin()
-		selected_option = input("Seleccione una opción: ")
-		print("\n")
-		match selected_option:
-			case "1":
-				list_devices.list()
-			case "2":
-				search_devices.search()
-			case "3":
-				add_device.add()
-			case "4":
-				delete_device.delete()
-			case "5":
-				manage_automations.manage_automations()
-			case "6":
-				consult_user_data.show_user_data()
-			case "0":
-				break
-			case _:
-				print("Valor recibido inválido")
-def handle_menu_selection_user():
-	while True:
-		display_menu_user()
-		selected_option = input("Seleccione una opción: ")
-		print("\n")
-		match selected_option:
-			case "1":
-				list_devices.list()
-			case "2":
-				search_devices.search()
-			case "3":
-				manage_automations.manage_automations()
-			case "4":
-				consult_user_data.show_user_data()
-			case "0":
-				break
-			case _:
-				print("Valor recibido inválido")
-
-def display_menu_general():
-	print("::::::::::::::::::::::::::::::::::")
-	print("0. Salir")
-	print("1. Listar dispositivos")
-	print("2. Buscar dispositivos")
-
-def display_menu_admin():
-	print("3. Agregar dispositivos")
-	print("4. Eliminar dispositivos")
-	print("5. Automatizaciones activas")
-	print("::::::::::::::::::::::::::::::::::")
-def display_menu_user():
-	print("3. Gestionar automatizaciones")
-	print("4. Consultar información")
-	print("::::::::::::::::::::::::::::::::::")
 
 def display_menu(user):
-	#display_menu_general()
-	#if user.is_admin == True :
-	#	display_menu_admin()
-	#else : 
-	#	display_menu_user()
-	handle_menu_selection()
+	menu = filter_menu(menu_list, user.role)
+	print("::::::::::::::::::::::::::::::::::")
+	print(":::::::::::::: MENU ::::::::::::::")
+	print("::::::::::::::::::::::::::::::::::")
+	for i,menu_item in enumerate(menu) :
+			print (i,". ",menu_item["name"])
+	print("::::::::::::::::::::::::::::::::::")
+	selected_option = handle_menu_selection(menu)
+	if selected_option != 0:
+		display_menu(user)
 
 def despedida():
 	print("Gracias por usar SmartHome Solutions, Adios")
@@ -122,13 +67,18 @@ menu_list = [
 	}
 ]
 
+def filter_menu(list, role):
+	filtered_list = [item for item in list if role in item["role"]]
+	return filtered_list
 
 
-def handle_menu_selection():
-		selected_option = int(input("Seleccione una opción: "))
-		for i,menu_item in enumerate(menu_list) :
-			if i == selected_option :
-				menu_item["function"]()
+def handle_menu_selection(menu):
+	selected_option = int(input("Seleccione una opción: "))
+	for i,menu_item in enumerate(menu) :
+		if i == selected_option :
+			menu_item["function"]()
+	return selected_option
+
 
 
 
