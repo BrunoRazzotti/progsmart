@@ -1,6 +1,7 @@
 from data import user_data_from_local
 
-def update_user(logged_user):
+def update_user():
+	logged_user = user_data_from_local.get_logged_user()
 	users_list = user_data_from_local.get_users()
 	print("Lista de usuarios")
 	for index, user in enumerate(users_list):

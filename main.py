@@ -1,14 +1,16 @@
-from menu_methods import list_devices, search_devices, add_device, delete_device, manage_automations, consult_user_data
+from data.user_data_from_local import get_logged_user
+from menu_methods import list_devices, search_devices, add_device, delete_device, manage_automations, consult_user_data, update_user_role
 from helpers import get_user_status 
 from auth import login 
 
 def main():
 	print("Bienvenido a SmartHome Solutions, el sistema de automatización de casas inteligentes.\n")
-	user = login.login_user()
-	if user is None:
+	login.login_user()
+	logged_user = get_logged_user()
+	if logged_user is None:
 		main()
 	else :	
-		return display_menu(user)
+		return display_menu(logged_user)
 
 def display_menu(user):
 	menu = filter_menu(menu_list, user.role)
@@ -64,6 +66,11 @@ menu_list = [
 		"name": "Consultar información de usuario",
 		"role": ["user"],
 		"function": consult_user_data.show_user_data
+	},
+	{
+		"name": "Actualizar rol de un usuario",
+		"role": ["admin"],
+		"function": update_user_role.update_user
 	}
 ]
 
