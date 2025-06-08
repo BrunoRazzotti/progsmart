@@ -8,4 +8,4 @@ def show_user_data():
             print("Nombre:", user.name)
             print("Apellido:", user.subname)
             print("Email:", user.mail)
-            print("Es admin o usuario:", user.get_is_admin())
+            print("Es admin o usuario:", user.is_admin)

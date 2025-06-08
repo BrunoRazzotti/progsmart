@@ -4,13 +4,13 @@ from auth import login
 
 def main():
 	print("Bienvenido a SmartHome Solutions, el sistema de automatización de casas inteligentes.\n")
-	is_admin = login.login_user()
-	if is_admin is None:
-		print("Usuario no existe")
-	elif is_admin:	
-		return handle_menu_selection_admin()
+	user = login.login_user()
+	if user is None:
+		main()
+	elif user.role == "admin":	
+		return display_menu(user)
 	else:
-		return handle_menu_selection_user()
+		return display_menu(user)
 	
 def handle_menu_selection_admin():
 	while True:
@@ -52,25 +52,81 @@ def handle_menu_selection_user():
 				break
 			case _:
 				print("Valor recibido inválido")
-			
+
+def display_menu_general():
+	print("::::::::::::::::::::::::::::::::::")
+	print("0. Salir")
+	print("1. Listar dispositivos")
+	print("2. Buscar dispositivos")
 
 def display_menu_admin():
-	print("::::::::::::::::::::::::::::::::::")
-	print("1. Listar dispositivos")
-	print("2. Buscar dispositivos")
 	print("3. Agregar dispositivos")
 	print("4. Eliminar dispositivos")
-	print("5. Gestionar automatizaciones")
-	print("6. Consultar información")
-	print("0. Salir")
+	print("5. Automatizaciones activas")
 	print("::::::::::::::::::::::::::::::::::")
 def display_menu_user():
-	print("::::::::::::::::::::::::::::::::::")
-	print("1. Listar dispositivos")
-	print("2. Buscar dispositivos")
 	print("3. Gestionar automatizaciones")
 	print("4. Consultar información")
-	print("0. Salir")
 	print("::::::::::::::::::::::::::::::::::")
+
+def display_menu(user):
+	#display_menu_general()
+	#if user.is_admin == True :
+	#	display_menu_admin()
+	#else : 
+	#	display_menu_user()
+	handle_menu_selection()
+
+
+menu_list = [
+	{
+		"name": "Listar Dispositivos",
+		"is_protected": ["user", "admin"],
+		"function": list_devices.list
+	},
+	{
+		"name": "Buscar dispositivos",
+		"is_protected": ["user", "admin"],
+		"function": search_devices.search
+	},
+	{
+		"name": "Agregar dispositivos",
+		"is_protected": ["admin"],
+		"function": add_device.add
+	},
+	{
+		"name": "Eliminar dispositivos",
+		"is_protected": ["admin"],
+		"function": delete_device.delete
+	},
+	{
+		"name": "Gestionar automatizaciones",
+		"is_protected": ["user"],
+		"function": manage_automations.manage_automations
+	},
+	{
+		"name": "Automatizaciones activas",
+		"is_protected": ["admin"],
+		"function": manage_automations.manage_automations
+	},
+	{
+		"name": "Consultar información de usuario",
+		"is_protected": ["user"],
+		"function": consult_user_data.show_user_data
+	},
+	{
+		"name": "Salir",
+		"is_protected": ["user", "admin"],
+		"function": print("Gracias por usar SmartHome Solutions, Adios")
+	}
+]
+
+def handle_menu_selection():
+		selected_option = int(input("Seleccione una opción: "))
+		for i,menu_item in enumerate(menu_list) :
+			if i == selected_option :
+				menu_item["function"]()
+
+
 
 main()
