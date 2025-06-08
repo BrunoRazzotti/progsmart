@@ -77,49 +77,52 @@ def display_menu(user):
 	#	display_menu_user()
 	handle_menu_selection()
 
-
+def despedida():
+	print("Gracias por usar SmartHome Solutions, Adios")
 menu_list = [
 	{
+		"name": "Salir",
+		"role": ["user", "admin"],
+		"function": despedida
+	},
+	{
 		"name": "Listar Dispositivos",
-		"is_protected": ["user", "admin"],
+		"role": ["user", "admin"],
 		"function": list_devices.list
 	},
 	{
 		"name": "Buscar dispositivos",
-		"is_protected": ["user", "admin"],
+		"role": ["user", "admin"],
 		"function": search_devices.search
 	},
 	{
 		"name": "Agregar dispositivos",
-		"is_protected": ["admin"],
+		"role": ["admin"],
 		"function": add_device.add
 	},
 	{
 		"name": "Eliminar dispositivos",
-		"is_protected": ["admin"],
+		"role": ["admin"],
 		"function": delete_device.delete
 	},
 	{
 		"name": "Gestionar automatizaciones",
-		"is_protected": ["user"],
+		"role": ["user"],
 		"function": manage_automations.manage_automations
 	},
 	{
 		"name": "Automatizaciones activas",
-		"is_protected": ["admin"],
+		"role": ["admin"],
 		"function": manage_automations.manage_automations
 	},
 	{
 		"name": "Consultar información de usuario",
-		"is_protected": ["user"],
+		"role": ["user"],
 		"function": consult_user_data.show_user_data
-	},
-	{
-		"name": "Salir",
-		"is_protected": ["user", "admin"],
-		"function": print("Gracias por usar SmartHome Solutions, Adios")
 	}
 ]
+
+
 
 def handle_menu_selection():
 		selected_option = int(input("Seleccione una opción: "))
