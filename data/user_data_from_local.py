@@ -10,8 +10,16 @@ users = [user1,user2,user3]
 def get_users ():
     return users
 
+logged_user = False
+
+def get_logged_user():
+	return logged_user
+
+def set_logged_user(user):
+	global logged_user
+	logged_user = user
+
 class UserDataFromLocal:
     def get_user_status(self):
         return get_user_status()
     
- 
