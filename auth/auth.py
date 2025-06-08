@@ -1,15 +1,16 @@
 from data.user_data_from_local import users as local_users
 
 class Auth:
-    def __init__(self):
-        self.users = { user.name: user for user in local_users}
+    def __init__(self, name,password):
+        self.name = name
+        self.password = password
+        self.users = local_users
+        self.user = None
 
-    def login(self, name, password):
-        if name in self.users:
-            user = self.users[name]
-            if user.password == password:
-                return  user.get_is_admin()
-            else:
-                return False
-        else:
-            return None     
+    def login(self):
+        for user in self.users:
+            if user.name == self.name and user.password == self.password:
+                self.user = user
+        return self.user
+
+           

@@ -1,11 +1,11 @@
 class UserData:
-    def __init__(self, name, subname, password, mail, is_admin,):
+    def __init__(self, name, subname, password, mail, role,):
         self.name = name
         self.subname = subname
         self.password = password
         self.mail = mail
-        self.is_admin = is_admin
+        self.role = role
 
     def get_is_admin(self):    
-       return True if self.is_admin else False
+       return True if self.role else False
 
