@@ -1,16 +1,31 @@
 from data.user_data_from_local import get_logged_user
 from menu_methods import list_devices, search_devices, add_device, delete_device, manage_automations, consult_user_data, update_user_role
 from helpers import get_user_status 
-from auth import login 
+from auth import login , register
 
 def main():
 	print("Bienvenido a SmartHome Solutions, el sistema de automatización de casas inteligentes.\n")
-	login.login_user()
-	logged_user = get_logged_user()
-	if logged_user is None:
-		main()
-	else :	
-		return display_menu(logged_user)
+	
+	while True:
+		display_auth()
+		selected_option = input("Seleccione una opción: ")
+		print("\n")
+		match selected_option:
+			case "1":
+				login.login_user()
+				logged_user = get_logged_user()
+				if logged_user is None:
+						main()
+				else: 	
+						return display_menu(logged_user)
+			case "2":
+				register.register_user()	
+		
+def display_auth():
+	print("::::::::::::::::::::::::::::::::::")
+	print("1. Ingresar Usuario")
+	print("2. Registrar usuario")
+	print("::::::::::::::::::::::::::::::::::")
 
 def display_menu(user):
 	menu = filter_menu(menu_list, user.role)
